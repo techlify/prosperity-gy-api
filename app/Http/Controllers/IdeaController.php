@@ -54,7 +54,11 @@ class IdeaController extends Controller
             'message' => 'Successfully deleted Idea!'
         ], 201);
     }
-    public function read(Request $request){
+    public function readall(Request $request){
         return response()->json(Idea::with('users')->get());
+    }
+    public function read(Request $request,$id)
+    {
+        return Idea::with('users','writeups')->with('writeups.users')->find($id);
     }
 }

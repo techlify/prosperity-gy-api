@@ -4,23 +4,26 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Idea extends Model
+class Writeup extends Model
 {
-     /**
+    /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
     protected $fillable = [
-        'creator_id', 'idea',
+        'creator_id', 'idea_id','writeup'
     ];
 
     public function users()
     {
         return $this->belongsTo('App\User','creator_id');
     }
-    public function writeups()
+    /**
+     * Get the Idea that owns the writeup.
+     */
+    public function ideas()
     {
-        return $this->hasMany('App\Writeup','idea_id');
+        return $this->belongsTo('App\Idea','idea_id');
     }
 }
