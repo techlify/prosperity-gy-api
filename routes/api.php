@@ -40,5 +40,6 @@ Route::group([
         Route::post('create-writeup', 'WriteupController@create');
         Route::post('update-writeup', 'WriteupController@update');
         Route::post('delete-writeup', 'WriteupController@delete');
+        Route::resource('category', 'CategoryController');
     });
 });
