@@ -23,4 +23,8 @@ class Idea extends Model
     {
         return $this->hasMany('App\Writeup','idea_id');
     }
+    public function votes()
+    {
+        return $this->hasMany('App\Vote','idea_id');
+    }
 }

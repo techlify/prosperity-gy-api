@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Idea;
 use App\User;
 use App\IdeaCategory;
+use App\Vote;
 use Illuminate\Http\Request;
 
 class IdeaController extends Controller
@@ -66,10 +67,13 @@ class IdeaController extends Controller
         ], 201);
     }
     public function readall(Request $request){
-        return response()->json(Idea::latest()->with('users')->get());
+        return response()->json(Idea::latest()->with('users','votes')->get());
     }
     public function read(Request $request,$id)
     {
-        return Idea::with('users','writeups')->with('writeups.users')->find($id);
+        $finalData = Idea::with('users','writeups')->with('writeups.users')->find($id);
+        $finalData["Upvotes"] = Vote::where(['idea_id' => $id,'vote' => 1])->count();
+        $finalData["Downvotes"] = Vote::where(['idea_id' => $id,'vote' => -1])->count();
+        return $finalData;
     }
 }
