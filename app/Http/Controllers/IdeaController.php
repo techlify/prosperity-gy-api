@@ -6,6 +6,7 @@ use App\Idea;
 use App\User;
 use App\IdeaCategory;
 use App\Vote;
+use App\Recommendation;
 use Illuminate\Http\Request;
 
 class IdeaController extends Controller
@@ -71,9 +72,10 @@ class IdeaController extends Controller
     }
     public function read(Request $request,$id)
     {
-        $finalData = Idea::with('users','writeups')->with('writeups.users')->find($id);
+        $finalData = Idea::with('users','writeups','recommendations')->with('writeups.users')->with('recommendations.users')->find($id);
         $finalData["Upvotes"] = Vote::where(['idea_id' => $id,'vote' => 1])->count();
         $finalData["Downvotes"] = Vote::where(['idea_id' => $id,'vote' => -1])->count();
+        $finalData["Ratings"] = Recommendation::where('idea_id',$id)->avg('rating');
         return $finalData;
     }
 }

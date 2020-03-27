@@ -43,5 +43,8 @@ Route::group([
         Route::post('create-vote', 'VoteController@storeVote');
         Route::post('get-vote', 'VoteController@userVote');
         Route::resource('category', 'CategoryController');
+        Route::post('create-recommendation', 'RecommendationController@create');
+        Route::post('update-recommendation', 'RecommendationController@update');
+        Route::post('delete-recommendation', 'RecommendationController@delete');
     });
 });
