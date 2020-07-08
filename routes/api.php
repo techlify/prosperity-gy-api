@@ -40,6 +40,8 @@ Route::group([
         Route::post('create-writeup', 'WriteupController@create');
         Route::post('update-writeup', 'WriteupController@update');
         Route::post('delete-writeup', 'WriteupController@delete');
+        Route::post('create-vote', 'VoteController@storeVote');
+        Route::post('get-vote', 'VoteController@userVote');
         Route::resource('category', 'CategoryController');
     });
 });
