@@ -18,7 +18,9 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('idea', 'IdeaController@read');
+Route::get('idea', 'IdeaController@readall');
+Route::get('idea/{id}', 'IdeaController@read');
+
 
 
 Route::group([
@@ -35,5 +37,8 @@ Route::group([
         Route::post('create-idea', 'IdeaController@create');
         Route::post('update-idea', 'IdeaController@update');
         Route::post('delete-idea', 'IdeaController@delete');
+        Route::post('create-writeup', 'WriteupController@create');
+        Route::post('update-writeup', 'WriteupController@update');
+        Route::post('delete-writeup', 'WriteupController@delete');
     });
 });
