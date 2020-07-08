@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Idea;
 use App\User;
+use App\IdeaCategory;
 use Illuminate\Http\Request;
 
 class IdeaController extends Controller
@@ -42,6 +43,16 @@ class IdeaController extends Controller
         $idea = Idea::find($request->idea_id);
         $idea->idea = $request->idea;
         $idea->save();
+        if($request->categories) {
+            foreach ($request->categories as $category) {
+                $idea_category = new IdeaCategory([
+                    'idea_id' => $request->idea_id,
+                    'category_id' => $category,
+                    'creator_id' => $request->user()->id
+                ]);
+                $idea_category->save();
+            }
+        }
         return response()->json([
             'message' => 'Successfully updated Idea!'
         ], 201);
@@ -55,7 +66,7 @@ class IdeaController extends Controller
         ], 201);
     }
     public function readall(Request $request){
-        return response()->json(Idea::with('users')->get());
+        return response()->json(Idea::latest()->with('users')->get());
     }
     public function read(Request $request,$id)
     {
